@@ -22,15 +22,15 @@ from model import ImageClassifier
 from llm_service import LLMExplainer
 
 
-st.set_page_config(page_title="딥러닝 + LLM 이미지 설명 서비스", page_icon="🖼️")
-st.title("🖼️ 딥러닝 + LLM 이미지 분류/설명 서비스")
+st.set_page_config(page_title="딥러닝 + LLM 이미지 설명 서비스", page_icon="")
+st.title("딥러닝 + LLM 이미지 분류/설명 서비스")
 st.caption("ResNet18(딥러닝)로 이미지를 분류하고, Claude(LLM)가 결과를 쉽게 설명해줍니다.")
 
 
 # ---------- 사이드바: API Key 입력 ----------
 with st.sidebar:
     st.header("설정")
-    api_key = st.text_input("Anthropic API Key", type="password")
+    api_key = st.text_input("API Key", type="password")
     st.caption("Key는 저장되지 않고 이 세션에서만 사용됩니다.")
 
 
@@ -62,13 +62,13 @@ if uploaded_file is not None:
 
         # 2) LLM 설명
         if not api_key:
-            st.warning("LLM 설명을 보려면 사이드바에 Anthropic API Key를 입력하세요.")
+            st.warning("LLM 설명을 보려면 사이드바에 API Key를 입력하세요.")
         else:
             with st.spinner("Claude가 결과를 설명하는 중입니다..."):
                 explainer = LLMExplainer(api_key=api_key)
                 explanation = explainer.explain(predictions, user_question)
 
-            st.subheader("🤖 LLM 설명")
+            st.subheader("LLM 설명")
             st.write(explanation)
 else:
     st.info("먼저 이미지를 업로드해주세요.")
